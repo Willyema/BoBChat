@@ -5,6 +5,7 @@ import com.icube.bobChat.Server.ProcessResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import de.leonhard.storage.Json;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,13 +53,14 @@ public class RegisterGUI {
                         ec = new EchoClient(settings.getString("serverIP"));
                     } else {
                         enterIPDialog eipd = new enterIPDialog();
+                        eipd.done = false;
                         eipd.createUI(f);
                         while (eipd.done) {
                             ec = new EchoClient(settings.getString("serverIP"));
                             break;
                         }
                     }
-                    ec.sendEcho("register:" + textField1.getText() + "/" + passwordField1.getText());
+                    ec.sendEcho("register:" + textField1.getText() + "/" + DigestUtils.sha256Hex(String.valueOf(passwordField1.getPassword())));
                 } catch (Exception ex) {
                     rvl.setText("Internal error");
                 }

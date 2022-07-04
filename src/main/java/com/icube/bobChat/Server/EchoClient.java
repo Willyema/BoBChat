@@ -1,11 +1,14 @@
 package com.icube.bobChat.Server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.net.*;
 
 public class EchoClient {
     private DatagramSocket socket;
     private InetAddress address;
-
+    Logger l = LogManager.getRootLogger();
     private byte[] buf;
 
     public EchoClient(String ipAddress) throws SocketException, UnknownHostException {
@@ -18,11 +21,9 @@ public class EchoClient {
         try {
             buf = new byte[msg.length()];
             buf = msg.getBytes();
-            System.out.println("msg.getBytes() = "+msg.getBytes());
             DatagramPacket packet
                     = new DatagramPacket(buf, buf.length, address, 1418);
             socket.send(packet);
-            System.out.println("packet.getData() = "+ packet.getData());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -50,22 +51,18 @@ public class EchoClient {
         switch (i2){
             case 1:
                 msg = msg.length()+"-----"+msg;
-                System.out.println("case is 1");
                 break;
             case 2:
                 msg = msg.length()+"----"+msg;
-                System.out.println("case is 2");
                 break;
             case 3:
                 msg = msg.length()+"---"+msg;
-                System.out.println("case is 3");
                 break;
             case 4:
                 msg = msg.length()+"--"+msg;
-                System.out.println("case is 4");
                 break;
         }
-        System.out.println(msg);
+        l.info(msg);
         return msg;
     }
 }

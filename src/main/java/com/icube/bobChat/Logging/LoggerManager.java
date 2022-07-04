@@ -27,7 +27,6 @@ public class LoggerManager {
         LocalDateTime now = LocalDateTime.now();
         File f = new File(masterFolder.getPath()+"\\Logs\\Log-"+dtf.format(now));
         File f2 = new File(f.getPath()+"\\log.log");
-        System.out.println(f2.getAbsolutePath());
         f.mkdirs();
         try {
             f2.createNewFile();

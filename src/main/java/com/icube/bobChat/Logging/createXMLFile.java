@@ -17,10 +17,10 @@ public class createXMLFile {
         ConfigurationBuilder<BuiltConfiguration> builder
                 = ConfigurationBuilderFactory.newConfigurationBuilder();
         AppenderComponentBuilder file
-                = builder.newAppender("log", "File");
+                = builder.newAppender("log", "Console");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
-        file.addAttribute("fileName", System.getProperty("user.home")+"\\BoBChat\\Logs\\Log-"+dtf.format(now)+"\\log.log");
+        //file.addAttribute("fileName", System.getProperty("user.home")+"\\BoBChat\\Logs\\Log-"+dtf.format(now)+"\\log.log");
 
         LayoutComponentBuilder standard
                 = builder.newLayout("PatternLayout");

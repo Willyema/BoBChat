@@ -19,7 +19,7 @@ public class ProcessResponse {
             if (msg.contains(",")) {
                 s.add(msg);
             }
-            if (s.toArray().length > 15){
+        /*    if (s.toArray().length > 15){
                 s.remove(14);
                 String s3 = "";
                 for (String s2 : s) {
@@ -27,13 +27,14 @@ public class ProcessResponse {
                 }
                 cui.textPane1.setText(s3);
             }
+         */
         } else {
             if (s.toArray().length >= 3) {
                 s.remove(0);
             }
         }
-        System.out.println(s);
-        l.info(msg);
+        l.info("Messages history"+s);
+        l.info("Message processing = "+msg);
     }
     public static void setChatUI(boolean b){
         chatUI = b;

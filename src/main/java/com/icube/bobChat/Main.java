@@ -14,7 +14,6 @@ public class Main {
         LoggerManager lm = new LoggerManager();
         lm.setUpLogger();
         try {
-            System.out.println("Thread sleepin");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -22,13 +21,10 @@ public class Main {
         Logger l = LogManager.getRootLogger();
         try{
             LoginGUI g = new LoginGUI();
-            System.out.println("Works here");
+            l.info("This is a test");
             g.createUI();
-            System.out.println("Works here");
             EchoServer es = new EchoServer();
-            System.out.println("Works here");
             es.run();
-            System.out.println("Works here");
         } catch (Exception e) {
          l.error("Error in starting gui! "+e.getMessage());
          for (StackTraceElement el : e.getStackTrace()){

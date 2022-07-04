@@ -32,13 +32,8 @@ public class EchoServer extends Thread{
                 DatagramPacket packet
                         = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-
-                InetAddress address = packet.getAddress();
-                int port = packet.getPort();
                 String oldReceived = new String(packet.getData(), 0, packet.getLength());
-                l.debug("Packet received = "+oldReceived);
                 String received = getMessage(oldReceived);
-                l.debug("Message = "+received);
                 pc.Process(received);
             }
         } catch (Exception e) {

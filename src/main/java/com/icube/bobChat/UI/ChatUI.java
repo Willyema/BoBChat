@@ -15,6 +15,7 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 public class ChatUI {
@@ -52,6 +53,7 @@ public class ChatUI {
             f.setResizable(false);
             f.setVisible(true);
             ec = new EchoClient(settings.getString("serverIP"));
+            l.info("Server ip: " + settings.getString("serverIP"));
             ProcessResponse.setChatUI(true);
         } catch (Exception e) {
             l.error("Exception in ChatUI");
@@ -67,13 +69,13 @@ public class ChatUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ec.sendEcho("msg:" + messageToSendTextField.getText());
+                    ZonedDateTime now2 = ZonedDateTime.now();
+                    l.info("Now: " + now2.toInstant().toEpochMilli());
                 } catch (Exception ex) {
                     rvl.setText("Internal error");
                 }
                 rvl.setText("Connecting to server...");
                 f.repaint();
-                System.out.println(textPane1.getSize().width);
-                System.out.println(textPane1.getSize().height);
             }
         });
         quitButton.addActionListener(new ActionListener() {
@@ -87,8 +89,6 @@ public class ChatUI {
     }
 
     public void updateAndRepaintFrame(String msg) {
-        System.out.println("Actually called");
-        System.out.println("works ig");
         String oldpanel = textPane1.getText();
         oldpanel = oldpanel + msg + System.lineSeparator();
         textPane1.setText(oldpanel);
@@ -136,9 +136,11 @@ public class ChatUI {
         Font rvlFont = this.$$$getFont$$$("JetBrains Mono", -1, 16, rvl.getFont());
         if (rvlFont != null) rvl.setFont(rvlFont);
         rvl.setText("");
-        p.add(rvl, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        p.add(rvl, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        p.add(scrollPane1, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         textPane1 = new JTextPane();
-        p.add(textPane1, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(284, 350), new Dimension(284, 350), new Dimension(284, 350), 0, false));
+        scrollPane1.setViewportView(textPane1);
     }
 
     /**

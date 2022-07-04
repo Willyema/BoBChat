@@ -6,7 +6,6 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.InetAddress;
 import java.util.Locale;
 
 import com.icube.bobChat.Server.EchoClient;
@@ -14,6 +13,7 @@ import com.icube.bobChat.Server.ProcessResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import de.leonhard.storage.Json;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,11 +39,8 @@ public class LoginGUI {
     private Logger l = LogManager.getRootLogger();
 
     public void createUI() {
-        System.out.println("Works here2");
         f.add(p);
-        System.out.println("Works here2");
         registerListeners();
-        System.out.println("Works here2");
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.pack();
         f.setVisible(true);
@@ -57,8 +54,9 @@ public class LoginGUI {
                     s = ProcessResponse.lastMessage;
                     try {
                         ec = new EchoClient(IPtextField2.getText());
+                        settings.set("serverIP", IPtextField2.getText());
                         //ec = new EchoClient(InetAddress.getLoopbackAddress().getHostAddress());
-                        ec.sendEcho("login:" + textField1.getText() + "/" + PasswordField.getText());
+                        ec.sendEcho("login:" + textField1.getText() + "/" + DigestUtils.sha256Hex(String.valueOf(PasswordField.getPassword())));
                     } catch (Exception ex) {
                         rvl.setText("IP is invalid");
                     }
